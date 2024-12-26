@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Flurorouter.rootRoute,
       onGenerateRoute: Flurorouter.router.generator,
       builder: (context, child) {
-        return AuthLayout();
+        return AuthLayout(child: child!);
       },
     );
   }
