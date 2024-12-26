@@ -5,8 +5,8 @@ import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/buttons/link_text.dart';
 import 'package:admin_dashboard/ui/inputs/custom_inputs.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,20 @@ class LoginView extends StatelessWidget {
         child: Form(
             child: Column(
           children: [
+            // Name
+            TextFormField(
+              // Validator: (),
+              style: TextStyle(color: Colors.white),
+              decoration: CustomInputs.loginInputDecoration(
+                label: 'Name',
+                hint: 'Enter your name',
+                icon: Icons.person_outline,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
             // Email
             TextFormField(
               // Validator: (),
@@ -48,15 +62,15 @@ class LoginView extends StatelessWidget {
             ),
             CustomOutlinedButton(
               onPressed: () {},
-              text: 'Login',
+              text: 'Register',
             ),
             SizedBox(
               height: 10,
             ),
             LinkText(
-                text: 'New account',
+                text: 'Go to Login',
                 onPressed: () {
-                  Navigator.pushNamed(context, Flurorouter.registerRoute);
+                  Navigator.pushNamed(context, Flurorouter.loginRoute);
                 }),
           ],
         )),
