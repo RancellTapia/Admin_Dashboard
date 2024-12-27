@@ -48,10 +48,10 @@ class MyApp extends StatelessWidget {
             return SplashLayout();
           }
 
-          if (authProvider.authStatus == AuthStatus.notAuthenticated) {
-            return AuthLayout(child: child!);
-          } else {
+          if (authProvider.authStatus == AuthStatus.authenticated) {
             return DashboardLayout(child: child!);
+          } else {
+            return AuthLayout(child: child!);
           }
         },
         theme: ThemeData.light().copyWith(
