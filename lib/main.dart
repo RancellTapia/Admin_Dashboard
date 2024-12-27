@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:admin_dashboard/services/navigation_services.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:admin_dashboard/providers/auth_provider.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         title: 'Admin Dashboard',
         initialRoute: Flurorouter.rootRoute,
         onGenerateRoute: Flurorouter.router.generator,
+        navigatorKey: NavigationService.navigatorKey,
         builder: (context, child) {
           return AuthLayout(child: child!);
         },
