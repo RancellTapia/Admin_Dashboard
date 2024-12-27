@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/ui/layouts/auth/auth_layout.dart';
 
 import 'package:admin_dashboard/router/router.dart';
 
-void main() {
+void main() async {
+  await LocalStorage.configurePrefs();
   Flurorouter.configureRoutes();
   runApp(const AppState());
 }
