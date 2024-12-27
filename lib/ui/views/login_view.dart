@@ -27,6 +27,7 @@ class LoginView extends StatelessWidget {
                 child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 370),
               child: Form(
+                  autovalidateMode: AutovalidateMode.onUnfocus,
                   key: loginFormProvider.formKey,
                   child: Column(
                     children: [
