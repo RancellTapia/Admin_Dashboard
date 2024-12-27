@@ -5,18 +5,16 @@ class ImageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      decoration: buildBoxDecoration(),
       child: Container(
-        decoration: buildBoxDecoration(),
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 400),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Image(
-                image: AssetImage('twitter-white-logo.png'),
-                width: 400,
-              ),
+        constraints: BoxConstraints(maxWidth: 400),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Image(
+              image: AssetImage('twitter-white-logo.png'),
+              width: 400,
             ),
           ),
         ),

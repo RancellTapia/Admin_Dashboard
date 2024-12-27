@@ -76,7 +76,7 @@ class _DesktopBody extends StatelessWidget {
       height: size.height * 0.95,
       child: Row(
         children: [
-          ImageBackground(),
+          Expanded(child: ImageBackground()),
           Container(
               width: 600,
               height: double.infinity,
