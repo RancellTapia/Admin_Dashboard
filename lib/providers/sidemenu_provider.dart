@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SideMenuProvider {
+class SideMenuProvider extends ChangeNotifier {
   static late AnimationController menuController;
   static bool isOpen = false;
+
+  String _currentPage = '';
+
+  String get currentPage => _currentPage;
+
+  void setCurrentPage(String currentPage) {
+    _currentPage = currentPage;
+
+    Future.delayed(Duration(milliseconds: 100), () {
+      notifyListeners();
+    });
+  }
 
   static Animation<double> movement = Tween(begin: -220.0, end: 0.0).animate(
       CurvedAnimation(parent: menuController, curve: Curves.easeInOut));

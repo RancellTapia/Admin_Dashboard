@@ -7,6 +7,7 @@ import 'package:admin_dashboard/ui/shared/widgets/text_separator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:admin_dashboard/ui/shared/widgets/logo.dart';
+import 'package:provider/provider.dart';
 
 class Sidebar extends StatelessWidget {
   void navigateTo(String routeName) {
@@ -18,6 +19,8 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sideMenuProvider = Provider.of<SideMenuProvider>(context);
+
     return Container(
       width: 220,
       height: double.infinity,
@@ -30,6 +33,8 @@ class Sidebar extends StatelessWidget {
           const SizedBox(height: 50),
           TextSeparator(text: 'Main'),
           MenuItem(
+            isActive:
+                sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
             text: 'Dashboard',
             icon: Icons.compass_calibration_outlined,
             onPressed: () => navigateTo(Flurorouter.dashboardRoute),
@@ -67,6 +72,7 @@ class Sidebar extends StatelessWidget {
           SizedBox(height: 30),
           TextSeparator(text: 'UI Elements'),
           MenuItem(
+            isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
             text: 'Icons',
             icon: Icons.list_alt_outlined,
             onPressed: () => navigateTo(Flurorouter.iconsRoute),
