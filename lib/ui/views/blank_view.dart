@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
 
-class DashboardView extends StatelessWidget {
-  const DashboardView({super.key});
+class BlankView extends StatelessWidget {
+  const BlankView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       physics: BouncingScrollPhysics(),
       children: [
-        Text('Dashboard View', style: CustomLabels.h1),
+        Text('Blank View', style: CustomLabels.h1),
         SizedBox(height: 10),
         WhiteCard(
           title: 'Sales Statistics',
