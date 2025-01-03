@@ -14,8 +14,8 @@ class BlankView extends StatelessWidget {
         Text('Blank View', style: CustomLabels.h1),
         SizedBox(height: 10),
         WhiteCard(
-          title: 'Sales Statistics',
-          child: Text('Sales Statistics'),
+          title: 'Blank View',
+          child: Text('Blank View'),
         )
       ],
     );
