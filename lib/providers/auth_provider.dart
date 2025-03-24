@@ -76,4 +76,12 @@ class AuthProvider extends ChangeNotifier {
 
     return true;
   }
+
+  void logOut() async {
+    app_storage.LocalStorage.prefs.remove('token');
+    authStatus = AuthStatus.notAuthenticated;
+    _supabaseService.signOut();
+    notifyListeners();
+    NavigationService.replaceTo(Flurorouter.loginRoute);
+  }
 }
