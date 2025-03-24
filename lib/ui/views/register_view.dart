@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     return ChangeNotifierProvider(
         create: (BuildContext context) => RegisterFormProvider(),
         child: Builder(builder: (context) {
@@ -30,22 +32,47 @@ class RegisterView extends StatelessWidget {
                   key: registerFormProvider.formKey,
                   child: Column(
                     children: [
-                      // Name
+                      // First Name
                       TextFormField(
-                        onChanged: (value) => registerFormProvider.name = value,
+                        onChanged: (value) =>
+                            registerFormProvider.firstName = value,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
+                            return 'Please enter your first name';
                           }
                           if (value.length < 2) {
-                            return 'Name must be at least 2 characters';
+                            return 'First name must be at least 2 characters';
                           }
                           return null;
                         },
                         style: TextStyle(color: Colors.white),
                         decoration: CustomInputs.loginInputDecoration(
-                          label: 'Name',
-                          hint: 'Enter your name',
+                          label: 'First Name',
+                          hint: 'Enter your first name',
+                          icon: Icons.person_outline,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      // Last Name
+                      TextFormField(
+                        onChanged: (value) =>
+                            registerFormProvider.lastName = value,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your last name';
+                          }
+                          if (value.length < 2) {
+                            return 'Last name must be at least 2 characters';
+                          }
+                          return null;
+                        },
+                        style: TextStyle(color: Colors.white),
+                        decoration: CustomInputs.loginInputDecoration(
+                          label: 'Last Name',
+                          hint: 'Enter your last name',
                           icon: Icons.person_outline,
                         ),
                       ),
@@ -98,7 +125,15 @@ class RegisterView extends StatelessWidget {
                       ),
                       CustomOutlinedButton(
                         onPressed: () {
-                          registerFormProvider.validateForm();
+                          final isValid = registerFormProvider.validateForm();
+
+                          if (isValid) {
+                            authProvider.register(
+                                registerFormProvider.firstName,
+                                registerFormProvider.lastName,
+                                registerFormProvider.email,
+                                registerFormProvider.password);
+                          }
                         },
                         text: 'Register',
                       ),
