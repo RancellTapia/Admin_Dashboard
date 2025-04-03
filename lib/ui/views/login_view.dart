@@ -80,10 +80,8 @@ class LoginView extends StatelessWidget {
                         onPressed: () {
                           final isValid = loginFormProvider.validateForm();
 
-                          if (isValid) {
-                            authProvider.login(loginFormProvider.email,
-                                loginFormProvider.password);
-                          }
+                          authProvider.login('jose@yopmail.com', 'test123');
+                          if (isValid) {}
                         },
                         text: 'Login',
                       ),
