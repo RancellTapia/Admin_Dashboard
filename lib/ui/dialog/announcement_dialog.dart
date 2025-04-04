@@ -1,5 +1,6 @@
 import 'package:admin_dashboard/models/announcements_model.dart';
 import 'package:admin_dashboard/providers/announcements_provider.dart';
+import 'package:admin_dashboard/ui/dialog/responsive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -138,8 +139,7 @@ class _AnnouncementDialogState extends State<AnnouncementDialog> {
     final provider = Provider.of<AnnouncementsProvider>(context, listen: false);
     final isEditing = widget.announcement != null;
 
-    return AlertDialog(
-      backgroundColor: Colors.white,
+    return ResponsiveDialog(
       title: Text(isEditing ? 'Editar anuncio' : 'Nuevo anuncio'),
       content: _isSaving
           ? const SizedBox(
@@ -149,118 +149,142 @@ class _AnnouncementDialogState extends State<AnnouncementDialog> {
             )
           : Form(
               key: _formKey,
-              child: SizedBox(
-                width: 400,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 10,
+                children: [
+                  Row(
                     children: [
-                      TextFormField(
-                        controller: _titleController,
-                        decoration: const InputDecoration(labelText: 'Título'),
-                        validator: (value) =>
-                            value == null || value.isEmpty ? 'Requerido' : null,
-                      ),
-                      TextFormField(
-                        controller: _contentController,
-                        decoration:
-                            const InputDecoration(labelText: 'Contenido'),
-                        maxLines: 4,
-                        validator: (value) =>
-                            value == null || value.isEmpty ? 'Requerido' : null,
-                      ),
-                      const SizedBox(height: 10),
-                      ListTile(
-                        title: const Text('Visible desde'),
-                        subtitle: Text(
-                          _visibleFrom != null
-                              ? _visibleFrom!.toLocal().toString().split(' ')[0]
-                              : 'No definido',
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () {
-                            _pickDate(
-                              label: 'Visible desde',
-                              initialDate: _visibleFrom,
-                              onPicked: (date) =>
-                                  setState(() => _visibleFrom = date),
-                            );
-                          },
+                      Expanded(
+                        child: TextFormField(
+                          controller: _titleController,
+                          decoration:
+                              const InputDecoration(labelText: 'Título'),
+                          validator: (value) => value == null || value.isEmpty
+                              ? 'Requerido'
+                              : null,
                         ),
                       ),
-                      ListTile(
-                        title: const Text('Visible hasta'),
-                        subtitle: Text(
-                          _visibleTo != null
-                              ? _visibleTo!.toLocal().toString().split(' ')[0]
-                              : 'No definido',
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () {
-                            _pickDate(
-                              label: 'Visible hasta',
-                              initialDate: _visibleTo,
-                              onPicked: (date) =>
-                                  setState(() => _visibleTo = date),
-                            );
-                          },
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                        child: SwitchListTile(
+                          value: _isActive,
+                          title: const Text('Activo'),
+                          onChanged: (value) =>
+                              setState(() => _isActive = value),
                         ),
                       ),
-                      if (_dateError != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Text(
-                            _dateError!,
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      SwitchListTile(
-                        value: _isActive,
-                        title: const Text('Activo'),
-                        onChanged: (value) => setState(() => _isActive = value),
-                      ),
-                      Column(
-                        children: [
-                          ElevatedButton.icon(
-                            onPressed: _pickImage,
-                            icon: const Icon(Icons.photo),
-                            label: const Text('Seleccionar imagen'),
-                          ),
-                          if (isEditing &&
-                              _imagePreviewBytes == null &&
-                              widget.announcement?.imageUrl != null &&
-                              widget.announcement!.imageUrl!.isNotEmpty) ...[
-                            Image.network(widget.announcement!.imageUrl!,
-                                height: 100),
-                          ],
-                          if (_imagePreviewBytes != null)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Column(
-                                children: [
-                                  Image.memory(_imagePreviewBytes!,
-                                      height: 100),
-                                  TextButton.icon(
-                                    onPressed: () {
-                                      setState(() {
-                                        _imagePreviewBytes = null;
-                                        _hasRemoteImage = false;
-                                      });
-                                    },
-                                    icon: const Icon(Icons.delete,
-                                        color: Colors.red),
-                                    label: const Text('Eliminar imagen'),
-                                  )
-                                ],
-                              ),
-                            ),
-                        ],
-                      )
                     ],
                   ),
-                ),
+                  TextFormField(
+                    controller: _contentController,
+                    decoration: const InputDecoration(labelText: 'Contenido'),
+                    maxLines: 4,
+                    validator: (value) =>
+                        value == null || value.isEmpty ? 'Requerido' : null,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Transform(
+                          transform: Matrix4.translationValues(-12, 0, 0),
+                          child: ListTile(
+                            title: const Text('Visible desde'),
+                            subtitle: Text(
+                              _visibleFrom != null
+                                  ? _visibleFrom!
+                                      .toLocal()
+                                      .toString()
+                                      .split(' ')[0]
+                                  : 'No definido',
+                            ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.calendar_today),
+                              onPressed: () {
+                                _pickDate(
+                                  label: 'Visible desde',
+                                  initialDate: _visibleFrom,
+                                  onPicked: (date) =>
+                                      setState(() => _visibleFrom = date),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: ListTile(
+                          title: const Text('Visible hasta'),
+                          subtitle: Text(
+                            _visibleTo != null
+                                ? _visibleTo!.toLocal().toString().split(' ')[0]
+                                : 'No definido',
+                          ),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.calendar_today),
+                            onPressed: () {
+                              _pickDate(
+                                label: 'Visible hasta',
+                                initialDate: _visibleTo,
+                                onPicked: (date) =>
+                                    setState(() => _visibleTo = date),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (_dateError != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: Text(
+                        _dateError!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  Column(
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: _pickImage,
+                        icon: const Icon(Icons.photo),
+                        label: const Text('Seleccionar imagen'),
+                      ),
+                      if (isEditing &&
+                          _imagePreviewBytes == null &&
+                          widget.announcement?.imageUrl != null &&
+                          widget.announcement!.imageUrl!.isNotEmpty) ...[
+                        Image.network(widget.announcement!.imageUrl!,
+                            height: 100),
+                      ],
+                      if (_imagePreviewBytes != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Column(
+                            children: [
+                              Image.memory(_imagePreviewBytes!, height: 100),
+                              TextButton.icon(
+                                onPressed: () {
+                                  setState(() {
+                                    _imagePreviewBytes = null;
+                                    _hasRemoteImage = false;
+                                  });
+                                },
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
+                                label: const Text('Eliminar imagen'),
+                              )
+                            ],
+                          ),
+                        ),
+                    ],
+                  )
+                ],
               ),
             ),
       actions: _isSaving

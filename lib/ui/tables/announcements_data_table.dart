@@ -1,4 +1,6 @@
+import 'package:admin_dashboard/models/announcements_model.dart';
 import 'package:admin_dashboard/ui/dialog/announcement_dialog.dart';
+import 'package:admin_dashboard/ui/dialog/responsive_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:admin_dashboard/providers/announcements_provider.dart';
@@ -14,6 +16,9 @@ class AnnouncementsDataTable extends StatelessWidget {
     if (announcements.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Expanded(
       child: Container(
@@ -61,118 +66,20 @@ class AnnouncementsDataTable extends StatelessWidget {
                           onPressed: () {
                             showDialog(
                               context: context,
-                              builder: (_) {
-                                final screenWidth =
-                                    MediaQuery.of(context).size.width;
-                                final screenHeight =
-                                    MediaQuery.of(context).size.height;
-
-                                final dialogWidth = screenWidth > 600
-                                    ? 600.0
-                                    : screenWidth * 0.9;
-                                final dialogHeight = screenHeight > 520
-                                    ? 520.0
-                                    : screenHeight * 0.9;
-
-                                return AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  title: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text('Detalle del anuncio'),
-                                      IconButton(
-                                        icon: Icon(Icons.close,
-                                            color: Colors.grey[850]),
-                                        onPressed: () => Navigator.pop(context),
-                                      ),
-                                    ],
+                              builder: (_) => ResponsiveDialog(
+                                title: const Text('Detalle del anuncio'),
+                                content: _DialogContent(
+                                  a: a,
+                                  dialogWidth: 600,
+                                  dialogHeight: 520,
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Cerrar'),
                                   ),
-                                  content: SizedBox(
-                                    width: dialogWidth,
-                                    height: dialogHeight,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          if (a.imageUrl != null &&
-                                              a.imageUrl!.isNotEmpty) ...[
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.network(
-                                                a.imageUrl!,
-                                                // height: 150,
-                                                width: dialogWidth - 50,
-                                              ),
-                                            ),
-                                            const SizedBox(height: 12),
-                                          ],
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.title, size: 20),
-                                              const SizedBox(width: 8),
-                                              Expanded(
-                                                  child: Text(
-                                                      'Título: ${a.title}')),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.description,
-                                                  size: 20),
-                                              const SizedBox(width: 8),
-                                              Expanded(
-                                                  child: Text(
-                                                      'Contenido: ${a.content}')),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.toggle_on,
-                                                  size: 20),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                  'Activo: ${a.isActive ? 'Sí' : 'No'}'),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              const Icon(Icons.calendar_today,
-                                                  size: 20),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                  'Desde: ${a.visibleFrom?.toString().split(' ')[0] ?? '—'}'),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                  Icons.calendar_today_outlined,
-                                                  size: 20),
-                                              const SizedBox(width: 8),
-                                              Text(
-                                                  'Hasta: ${a.visibleTo?.toString().split(' ')[0] ?? '—'}'),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('Cerrar'),
-                                    ),
-                                  ],
-                                );
-                              },
+                                ],
+                              ),
                             );
                           },
                         ),
@@ -229,6 +136,96 @@ class AnnouncementsDataTable extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _DialogContent extends StatelessWidget {
+  const _DialogContent({
+    super.key,
+    required this.dialogWidth,
+    required this.dialogHeight,
+    required this.a,
+  });
+
+  final double dialogWidth;
+  final double dialogHeight;
+  final Announcement a;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        spacing: 8,
+        children: [
+          if (a.imageUrl != null && a.imageUrl!.isNotEmpty) ...[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                a.imageUrl!,
+                // height: 150,
+                width: dialogWidth,
+              ),
+            ),
+            const SizedBox(height: 2),
+          ],
+          Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.title, size: 20),
+                    const SizedBox(width: 8),
+                    Expanded(child: Text('Título: ${a.title}')),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.toggle_on, size: 20),
+                    const SizedBox(width: 8),
+                    Text('Activo: ${a.isActive ? 'Sí' : 'No'}'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.calendar_today, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                        'Desde: ${a.visibleFrom?.toString().split(' ')[0] ?? '—'}'),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    const Icon(Icons.calendar_today, size: 20),
+                    const SizedBox(width: 8),
+                    Text(
+                        'Hasta: ${a.visibleTo?.toString().split(' ')[0] ?? '—'}'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              const Icon(Icons.description, size: 20),
+              const SizedBox(width: 8),
+              Expanded(child: Text('Contenido: ${a.content}')),
+            ],
+          ),
+        ],
       ),
     );
   }
