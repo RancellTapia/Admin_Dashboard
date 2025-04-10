@@ -11,9 +11,9 @@ class WhiteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: 15, bottom: 15),
+      margin: EdgeInsets.only(bottom: 15),
       padding: EdgeInsets.all(10),
-      width: width != null ? width : null,
+      width: width,
       decoration: buildBoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

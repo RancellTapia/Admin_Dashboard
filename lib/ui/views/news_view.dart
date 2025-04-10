@@ -1,4 +1,3 @@
-import 'package:admin_dashboard/models/announcements_model.dart';
 import 'package:admin_dashboard/providers/announcements_provider.dart';
 import 'package:admin_dashboard/ui/cards/white_card.dart';
 import 'package:admin_dashboard/ui/dialog/announcement_dialog.dart';
@@ -7,16 +6,7 @@ import 'package:admin_dashboard/ui/tables/announcements_data_table.dart';
 import 'package:flutter/material.dart';
 
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
 import 'package:provider/provider.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
-
-import 'dart:typed_data';
-import 'package:flutter/foundation.dart' show kIsWeb;
-
-import 'package:universal_html/html.dart' as html;
 
 class NewsView extends StatefulWidget {
   const NewsView({super.key});
@@ -49,26 +39,33 @@ class _NewsViewState extends State<NewsView> {
     return Column(
       // physics: BouncingScrollPhysics(),
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('News View', style: CustomLabels.h1),
-            ActiveButton(
-              title: 'Nueva noticia',
-              icon: Icons.add,
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (_) => const AnnouncementDialog(),
-                );
-              },
-            )
-          ],
+        SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Noticias', style: CustomLabels.h1),
+              ActiveButton(
+                title: 'Agregar Noticia',
+                icon: Icons.add,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) => const AnnouncementDialog(),
+                  );
+                },
+              )
+            ],
+          ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 20),
         Expanded(
-          child: WhiteCard(
-            child: AnnouncementsDataTable(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: WhiteCard(
+              child: AnnouncementsDataTable(),
+            ),
           ),
         )
       ],
