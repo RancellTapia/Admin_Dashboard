@@ -33,7 +33,7 @@ class Sidebar extends StatelessWidget {
           const SizedBox(height: 20),
           const Logo(),
           const SizedBox(height: 50),
-          TextSeparator(text: 'Main'),
+          TextSeparator(text: 'Principal'),
           MenuItem(
             isActive:
                 sideMenuProvider.currentPage == Flurorouter.dashboardRoute,
@@ -44,66 +44,72 @@ class Sidebar extends StatelessWidget {
           MenuItem(
             isActive:
                 sideMenuProvider.currentPage == Flurorouter.announcementsRoute,
-            text: 'Announcements',
+            text: 'Anuncios',
             icon: Icons.announcement_sharp,
             onPressed: () => navigateTo(Flurorouter.announcementsRoute),
           ),
           MenuItem(
-            text: 'Orders',
-            icon: Icons.shopping_cart_outlined,
-            onPressed: () {},
+            isActive: sideMenuProvider.currentPage == Flurorouter.newsRoute,
+            text: 'Noticias',
+            icon: Icons.newspaper,
+            onPressed: () => navigateTo(Flurorouter.newsRoute),
           ),
-          MenuItem(
-            text: 'Analytics',
-            icon: Icons.show_chart_outlined,
-            onPressed: () {},
-          ),
-          MenuItem(
-            text: 'Categories',
-            icon: Icons.layers_outlined,
-            onPressed: () {},
-          ),
-          MenuItem(
-            text: 'Products',
-            icon: Icons.dashboard_outlined,
-            onPressed: () {},
-          ),
-          MenuItem(
-            text: 'Discounts',
-            icon: Icons.attach_money_outlined,
-            onPressed: () {},
-          ),
-          MenuItem(
-            text: 'Customers',
-            icon: Icons.people_alt_outlined,
-            onPressed: () {},
-          ),
-          SizedBox(height: 30),
-          TextSeparator(text: 'UI Elements'),
-          MenuItem(
-            isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
-            text: 'Icons',
-            icon: Icons.list_alt_outlined,
-            onPressed: () => navigateTo(Flurorouter.iconsRoute),
-          ),
-          MenuItem(
-            text: 'Marketing',
-            icon: Icons.mark_email_read_outlined,
-            onPressed: () {},
-          ),
-          MenuItem(
-            text: 'Campaigns',
-            icon: Icons.note_add_outlined,
-            onPressed: () {},
-          ),
-          MenuItem(
-            isActive: sideMenuProvider.currentPage == Flurorouter.blankRoute,
-            text: 'Blank',
-            icon: Icons.post_add_outlined,
-            onPressed: () => navigateTo(Flurorouter.blankRoute),
-          ),
-          SizedBox(height: 50),
-          TextSeparator(text: 'Exit'),
+          // MenuItem(
+          //   text: 'Orders',
+          //   icon: Icons.shopping_cart_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   text: 'Analytics',
+          //   icon: Icons.show_chart_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   text: 'Categories',
+          //   icon: Icons.layers_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   text: 'Products',
+          //   icon: Icons.dashboard_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   text: 'Discounts',
+          //   icon: Icons.attach_money_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   text: 'Customers',
+          //   icon: Icons.people_alt_outlined,
+          //   onPressed: () {},
+          // ),
+          // SizedBox(height: 30),
+          // TextSeparator(text: 'UI Elements'),
+          // MenuItem(
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.iconsRoute,
+          //   text: 'Icons',
+          //   icon: Icons.list_alt_outlined,
+          //   onPressed: () => navigateTo(Flurorouter.iconsRoute),
+          // ),
+          // MenuItem(
+          //   text: 'Marketing',
+          //   icon: Icons.mark_email_read_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   text: 'Campaigns',
+          //   icon: Icons.note_add_outlined,
+          //   onPressed: () {},
+          // ),
+          // MenuItem(
+          //   isActive: sideMenuProvider.currentPage == Flurorouter.blankRoute,
+          //   text: 'Blank',
+          //   icon: Icons.post_add_outlined,
+          //   onPressed: () => navigateTo(Flurorouter.blankRoute),
+          // ),
+          SizedBox(height: 450),
+          TextSeparator(text: 'Salida'),
           MenuItem(
             text: 'Logout',
             icon: Icons.exit_to_app_outlined,

@@ -2,6 +2,7 @@ import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/ui/views/announcements_view.dart';
 import 'package:admin_dashboard/ui/views/blank_view.dart';
+import 'package:admin_dashboard/ui/views/news_view.dart';
 import 'package:provider/provider.dart';
 import 'package:fluro/fluro.dart';
 
@@ -58,6 +59,19 @@ class DashboardHandlers {
 
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return AnnouncementsView();
+    } else {
+      return LoginView();
+    }
+  });
+
+  static Handler news = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPage(Flurorouter.newsRoute);
+
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return NewsView();
     } else {
       return LoginView();
     }
