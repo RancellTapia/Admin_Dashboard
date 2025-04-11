@@ -1,8 +1,8 @@
-import 'package:admin_dashboard/providers/announcements_provider.dart';
+import 'package:admin_dashboard/providers/news_provider.dart';
 import 'package:admin_dashboard/ui/cards/white_card.dart';
-import 'package:admin_dashboard/ui/dialog/announcement_dialog.dart';
+import 'package:admin_dashboard/ui/dialog/news_dialog.dart';
 import 'package:admin_dashboard/ui/shared/widgets/active_button.dart';
-import 'package:admin_dashboard/ui/tables/announcements_data_table.dart';
+import 'package:admin_dashboard/ui/tables/news_data_table.dart';
 import 'package:flutter/material.dart';
 
 import 'package:admin_dashboard/ui/labels/custom_labels.dart';
@@ -19,25 +19,23 @@ class _NewsViewState extends State<NewsView> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<AnnouncementsProvider>(context, listen: false)
-            .fetchAnnouncements());
+    Future.microtask(
+        () => Provider.of<NewsProvider>(context, listen: false).fetchNews());
   }
 
   @override
   Widget build(BuildContext context) {
-    final announcements = Provider.of<AnnouncementsProvider>(context);
+    final news = Provider.of<NewsProvider>(context);
 
-    if (announcements.announcements.isEmpty) {
+    if (news.news.isEmpty) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
 
-    print('Announcements ${announcements.announcements[0].title}');
+    print('news ${news.news[0].title}');
 
     return Column(
-      // physics: BouncingScrollPhysics(),
       children: [
         SizedBox(height: 20),
         Padding(
@@ -52,7 +50,7 @@ class _NewsViewState extends State<NewsView> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (_) => const AnnouncementDialog(),
+                    builder: (dialogContext) => const NewsDialog(),
                   );
                 },
               )
@@ -64,7 +62,8 @@ class _NewsViewState extends State<NewsView> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: WhiteCard(
-              child: AnnouncementsDataTable(),
+              width: double.infinity,
+              child: NewsDataTable(),
             ),
           ),
         )

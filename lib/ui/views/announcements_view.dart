@@ -63,6 +63,7 @@ class _AnnouncementsViewState extends State<AnnouncementsView> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: WhiteCard(
+              width: double.infinity,
               child: AnnouncementsDataTable(),
             ),
           ),
