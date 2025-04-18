@@ -21,7 +21,7 @@ class AuthLayout extends StatelessWidget {
               : _MobileBody(child: child),
 
           //LinksBar
-          LinksBar()
+          // LinksBar()
         ],
       ),
     ));
@@ -71,9 +71,9 @@ class _DesktopBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Container(
+    return SizedBox(
       width: size.width,
-      height: size.height * 0.95,
+      height: size.height,
       child: Row(
         children: [
           Expanded(child: ImageBackground()),

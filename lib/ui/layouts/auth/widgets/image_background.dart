@@ -9,15 +9,15 @@ class ImageBackground extends StatelessWidget {
       decoration: buildBoxDecoration(),
       child: Container(
         constraints: BoxConstraints(maxWidth: 400),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Image(
-              image: AssetImage('twitter-white-logo.png'),
-              width: 400,
-            ),
-          ),
-        ),
+        // child: Center(
+        //   child: Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 20),
+        //     child: Image(
+        //       image: AssetImage('twitter-white-logo.png'),
+        //       width: 400,
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
@@ -25,7 +25,7 @@ class ImageBackground extends StatelessWidget {
   BoxDecoration buildBoxDecoration() {
     return const BoxDecoration(
       image: DecorationImage(
-        image: AssetImage('assets/twitter-bg.png'),
+        image: AssetImage('bg.png'),
         fit: BoxFit.cover,
       ),
     );
