@@ -122,12 +122,12 @@ class _LoginViewState extends State<LoginView> {
                       SizedBox(
                         height: 10,
                       ),
-                      LinkText(
-                          text: 'New account',
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, Flurorouter.registerRoute);
-                          }),
+                      // LinkText(
+                      //     text: 'New account',
+                      //     onPressed: () {
+                      //       Navigator.pushNamed(
+                      //           context, Flurorouter.registerRoute);
+                      //     }),
                     ],
                   )),
             )),
