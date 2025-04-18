@@ -10,8 +10,21 @@ import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/buttons/link_text.dart';
 import 'package:admin_dashboard/ui/inputs/custom_inputs.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  bool _obscurePassword = true;
+
+  bool get obscurePassword => _obscurePassword;
+
+  void togglePasswordVisibility() {
+    _obscurePassword = !_obscurePassword;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +49,8 @@ class LoginView extends StatelessWidget {
                     children: [
                       // Email
                       TextFormField(
+                        onFieldSubmitted: (_) =>
+                            onFormSubmit(loginFormProvider, authProvider),
                         onChanged: (value) => loginFormProvider.email = value,
                         validator: (value) {
                           if (!EmailValidator.validate(value ?? '')) {
@@ -55,6 +70,8 @@ class LoginView extends StatelessWidget {
 
                       // Password
                       TextFormField(
+                        onFieldSubmitted: (_) =>
+                            onFormSubmit(loginFormProvider, authProvider),
                         onChanged: (value) =>
                             loginFormProvider.password = value,
                         validator: (value) {
@@ -66,11 +83,26 @@ class LoginView extends StatelessWidget {
                           }
                           return null;
                         },
+                        obscureText: obscurePassword,
                         style: TextStyle(color: Colors.white),
                         decoration: CustomInputs.loginInputDecoration(
-                          label: 'Password',
-                          hint: 'Enter your password',
-                          icon: Icons.lock_outline_rounded,
+                                hint: '*********',
+                                label: 'Contraseña',
+                                icon: Icons.lock_outline_rounded)
+                            .copyWith(
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              obscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.white70,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                togglePasswordVisibility();
+                              });
+                            },
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -80,8 +112,10 @@ class LoginView extends StatelessWidget {
                         onPressed: () {
                           final isValid = loginFormProvider.validateForm();
 
-                          authProvider.login('jose@yopmail.com', 'test123');
-                          if (isValid) {}
+                          if (isValid) {
+                            authProvider.login(loginFormProvider.email,
+                                loginFormProvider.password);
+                          }
                         },
                         text: 'Login',
                       ),
@@ -99,5 +133,13 @@ class LoginView extends StatelessWidget {
             )),
           );
         }));
+  }
+
+  void onFormSubmit(
+      LoginFormProvider loginFormProvider, AuthProvider authProvider) {
+    final isValid = loginFormProvider.validateForm();
+    if (isValid) {
+      authProvider.login(loginFormProvider.email, loginFormProvider.password);
+    }
   }
 }

@@ -34,8 +34,6 @@ class _AnnouncementsViewState extends State<AnnouncementsView> {
       );
     }
 
-    print('Announcements ${announcements.announcements[0].title}');
-
     return Column(
       children: [
         SizedBox(height: 20),
