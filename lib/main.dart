@@ -19,10 +19,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await app_storage.LocalStorage.configurePrefs();
-  await dotenv.load();
+  // await dotenv.load();
 
-  final supabaseUrl = dotenv.env['SUPABASE_URL'];
-  final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+  // final supabaseUrl = dotenv.env['SUPABASE_URL'];
+  // final supabaseAnonKey = dotenv.env['SUPABASE_ANON_KEY'];
+
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 
   if (supabaseUrl == null || supabaseAnonKey == null) {
     throw Exception(
