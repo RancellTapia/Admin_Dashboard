@@ -1,6 +1,7 @@
 {
     "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
+        { "source": "/assets/:file", "destination": "/assets/assets/:file" },
+        { "source": "/(.*)", "destination": "/index.html" }
     ],
     "cleanUrls": true
   }
