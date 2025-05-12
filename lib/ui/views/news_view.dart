@@ -33,8 +33,6 @@ class _NewsViewState extends State<NewsView> {
       );
     }
 
-    print('news ${news.news[0].title}');
-
     return Column(
       children: [
         SizedBox(height: 20),
@@ -58,15 +56,30 @@ class _NewsViewState extends State<NewsView> {
           ),
         ),
         SizedBox(height: 20),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: WhiteCard(
-              width: double.infinity,
-              child: NewsDataTable(),
+        if (news.news.isNotEmpty)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: WhiteCard(
+                width: double.infinity,
+                child: NewsDataTable(),
+              ),
             ),
-          ),
-        )
+          )
+        else
+          Column(
+            children: [
+              const SizedBox(height: 180),
+              Text(
+                'No hay noticias, agregue una o más noticias desde el botón "Agregar Noticia" de arriba.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          )
       ],
     );
   }
