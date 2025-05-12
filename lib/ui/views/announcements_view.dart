@@ -28,11 +28,11 @@ class _AnnouncementsViewState extends State<AnnouncementsView> {
   Widget build(BuildContext context) {
     final announcements = Provider.of<AnnouncementsProvider>(context);
 
-    if (announcements.announcements.isEmpty) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+    // if (announcements.announcements.isEmpty) {
+    //   return const Center(
+    //     child: CircularProgressIndicator(),
+    //   );
+    // }
 
     return Column(
       children: [
@@ -57,15 +57,30 @@ class _AnnouncementsViewState extends State<AnnouncementsView> {
           ),
         ),
         SizedBox(height: 20),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: WhiteCard(
-              width: double.infinity,
-              child: AnnouncementsDataTable(),
+        if (announcements.announcements.isNotEmpty)
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: WhiteCard(
+                width: double.infinity,
+                child: AnnouncementsDataTable(),
+              ),
             ),
-          ),
-        )
+          )
+        else
+          Column(
+            children: [
+              const SizedBox(height: 180),
+              Text(
+                'No hay anuncios, agregue uno o más anuncios desde el botón "Agregar Anuncio" de arriba.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          )
       ],
     );
   }

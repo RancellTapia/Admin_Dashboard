@@ -17,9 +17,6 @@ class AnnouncementsDataTable extends StatelessWidget {
       return const Center(child: CircularProgressIndicator());
     }
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(16),
